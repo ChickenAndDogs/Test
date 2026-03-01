@@ -1,14 +1,58 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동물상 테스트 - 나랑 닮은 동물은?</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <div class="container">
+        <header>
+            <h1>🐶 동물상 테스트 🐱</h1>
+            <p class="subtitle">인공지능이 분석하는 나의 동물상</p>
+        </header>
+
+        <main>
+            <div id="upload-section" class="upload-section">
+                <div id="image-upload-area" class="upload-box">
+                    <input type="file" id="image-input" accept="image/*" hidden>
+                    <div class="upload-content">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <p>사진을 올리거나 클릭하세요</p>
+                    </div>
+                    <img id="face-image" src="" alt="your image" style="display: none;">
+                    <div id="webcam-container" style="display: none;"></div>
+                </div>
+                
+                <div class="button-group">
+                    <button id="camera-btn" class="btn secondary-btn"><i class="fas fa-camera"></i> 카메라 켜기</button>
+                    <button id="capture-btn" class="btn primary-btn" style="display: none;"><i class="fas fa-circle"></i> 촬영하기</button>
+                    <button id="predict-btn" class="btn primary-btn" disabled>분석하기</button>
+                </div>
+            </div>
+
+            <div id="loading" class="loading-spinner" style="display: none;">
+                <div class="spinner"></div>
+                <p>AI가 분석 중입니다...</p>
+            </div>
+
+            <div id="result-section" class="result-area" style="display: none;">
+                <h2 id="result-title">분석 결과</h2>
+                <div id="label-container" class="label-container"></div>
+                <button onclick="location.reload()" class="btn secondary-btn">다시 시도하기</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2026 Animal Face AI. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- TensorFlow.js and Teachable Machine Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
