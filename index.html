@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>동물상 테스트 - 나랑 닮은 동물은?</title>
+    <title>동물상 테스트 - AI로 확인하는 나의 동물상 | 무료 동물 관상 분석</title>
+    <meta name="description" content="인공지능(AI)이 분석하는 나의 동물상 테스트! 강아지상, 고양이상, 토끼상 등 당신과 가장 닮은 동물을 무료로 확인해보세요. 사진 촬영 및 업로드 가능.">
+    <meta name="keywords" content="동물상 테스트, 관상 분석, AI 테스트, 강아지상, 고양이상, 얼굴 분석, 인공지능 테스트">
     <meta name="google-adsense-account" content="ca-pub-4509486261948027">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4509486261948027"
      crossorigin="anonymous"></script>
@@ -11,45 +13,120 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">Animal Face AI</a>
+            <ul class="nav-menu">
+                <li><a href="#test">테스트하기</a></li>
+                <li><a href="#how-it-works">분석 원리</a></li>
+                <li><a href="#types">동물상 종류</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
-        <header>
+        <header id="test">
             <h1>🐶 동물상 테스트 🐱</h1>
             <p class="subtitle">인공지능이 분석하는 나의 동물상</p>
         </header>
 
         <main>
-            <div id="upload-section" class="upload-section">
-                <div id="image-upload-area" class="upload-box">
-                    <input type="file" id="image-input" accept="image/*" hidden>
-                    <div class="upload-content">
-                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
-                        <p>사진을 올리거나 클릭하세요</p>
+            <!-- Ad Slot (Upper) -->
+            <div class="ad-container">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-4509486261948027"
+                     data-ad-slot="YOUR_AD_SLOT_ID"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+
+            <section class="test-section">
+                <div id="upload-section" class="upload-section">
+                    <div id="image-upload-area" class="upload-box">
+                        <input type="file" id="image-input" accept="image/*" hidden>
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                            <p>사진을 올리거나 클릭하세요</p>
+                        </div>
+                        <img id="face-image" src="" alt="your image" style="display: none;">
+                        <div id="webcam-container" style="display: none;"></div>
                     </div>
-                    <img id="face-image" src="" alt="your image" style="display: none;">
-                    <div id="webcam-container" style="display: none;"></div>
+                    
+                    <div class="button-group">
+                        <button id="camera-btn" class="btn secondary-btn"><i class="fas fa-camera"></i> 카메라로 촬영</button>
+                        <button id="capture-btn" class="btn primary-btn" style="display: none;"><i class="fas fa-circle"></i> 촬영하기</button>
+                        <button id="predict-btn" class="btn primary-btn" disabled>분석 시작하기</button>
+                    </div>
                 </div>
-                
-                <div class="button-group">
-                    <button id="camera-btn" class="btn secondary-btn"><i class="fas fa-camera"></i> 카메라 켜기</button>
-                    <button id="capture-btn" class="btn primary-btn" style="display: none;"><i class="fas fa-circle"></i> 촬영하기</button>
-                    <button id="predict-btn" class="btn primary-btn" disabled>분석하기</button>
+
+                <div id="loading" class="loading-spinner" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>AI가 관상을 분석 중입니다...</p>
                 </div>
-            </div>
 
-            <div id="loading" class="loading-spinner" style="display: none;">
-                <div class="spinner"></div>
-                <p>AI가 분석 중입니다...</p>
-            </div>
+                <div id="result-section" class="result-area" style="display: none;">
+                    <h2 id="result-title">분석 결과</h2>
+                    <div id="label-container" class="label-container"></div>
+                    <button onclick="location.reload()" class="btn secondary-btn">다시 시도하기</button>
+                </div>
+            </section>
 
-            <div id="result-section" class="result-area" style="display: none;">
-                <h2 id="result-title">분석 결과</h2>
-                <div id="label-container" class="label-container"></div>
-                <button onclick="location.reload()" class="btn secondary-btn">다시 시도하기</button>
-            </div>
+            <hr class="section-divider">
+
+            <!-- Information Section 1: Analysis Principles -->
+            <section id="how-it-works" class="info-section">
+                <h2>💡 AI 동물상 분석 원리</h2>
+                <div class="info-card">
+                    <p>본 서비스는 Google의 <strong>Teachable Machine</strong> 기술을 활용하여 제작되었습니다. 수만 장의 동물상 관련 이미지 데이터를 학습한 딥러닝 모델이 사용자의 얼굴 특징(눈, 코, 입의 비율 및 각도)을 분석하여 가장 닮은 동물을 찾아냅니다.</p>
+                    <p>업로드된 사진은 분석 즉시 폐기되며, 어떠한 서버에도 저장되지 않으므로 안심하고 이용하셔도 됩니다.</p>
+                </div>
+            </section>
+
+            <!-- Information Section 2: Types -->
+            <section id="types" class="info-section">
+                <h2>🐾 주요 동물상 가이드</h2>
+                <div class="grid-container">
+                    <div class="type-card">
+                        <h3>🐶 강아지상</h3>
+                        <p>선한 눈매와 부드러운 인상이 특징입니다. 주변 사람들에게 친근하고 다정한 매력을 발산하며, 신뢰감을 주는 이미지를 가지고 있습니다.</p>
+                    </div>
+                    <div class="type-card">
+                        <h3>🐱 고양이상</h3>
+                        <p>도도하고 세련된 느낌을 줍니다. 눈매가 날렵하고 매력적이며, 신비로운 분위기와 함께 강렬한 카리스마를 보여주는 경우가 많습니다.</p>
+                    </div>
+                    <div class="type-card">
+                        <h3>🐰 토끼상</h3>
+                        <p>귀엽고 발랄한 인상을 줍니다. 똘망똘망한 눈망울과 밝은 미소가 매력적이며, 사람들에게 보호 본능을 자극하는 사랑스러운 이미지가 특징입니다.</p>
+                    </div>
+                    <div class="type-card">
+                        <h3>🦊 여우상</h3>
+                        <p>지적이고 영리한 느낌을 줍니다. 눈꼬리가 살짝 올라간 매력적인 눈매와 갸름한 턱선이 돋보이며, 매혹적이고 스타일리시한 분위기를 풍깁니다.</p>
+                    </div>
+                </div>
+            </section>
         </main>
 
-        <footer>
+        <!-- Ad Slot (Lower) -->
+        <div class="ad-container" style="margin-top: 2rem;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4509486261948027"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#test">테스트</a>
+                <a href="/privacy.html">개인정보처리방침</a>
+                <a href="/terms.html">이용약관</a>
+            </div>
             <p>© 2026 Animal Face AI. All rights reserved.</p>
+            <p class="footer-note">본 서비스는 인공지능 기술을 기반으로 하며, 결과는 재미로만 즐겨주세요.</p>
         </footer>
     </div>
 
